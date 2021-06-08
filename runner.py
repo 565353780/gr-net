@@ -1,4 +1,4 @@
-#! /home/chli/anaconda3/envs/gr-net/bin/python
+#! /usr/bin/python3
 # -*- coding: utf-8 -*-
 # @Author: Haozhe Xie
 # @Date:   2019-07:31 16:57:15
