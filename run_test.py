@@ -12,9 +12,7 @@ cv2.setNumThreads(0)
 from pprint import pprint
 
 from config import cfg
-from core.train import train_net
 from core.test import test_net
-from core.inference import inference_net
 
 
 if __name__ == '__main__':
@@ -28,5 +26,5 @@ if __name__ == '__main__':
 
     os.environ["CUDA_VISIBLE_DEVICES"] = cfg.CONST.DEVICE
 
-    inference_net(cfg)
+    test_net(cfg)
 
