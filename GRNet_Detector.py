@@ -5,8 +5,6 @@ import os
 from pprint import pprint
 import numpy as np
 import open3d as o3d
-import matplotlib
-matplotlib.use('Agg')
 import torch
 
 from config import cfg
