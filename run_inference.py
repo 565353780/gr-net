@@ -14,7 +14,7 @@ if __name__ == '__main__':
 
     grnet_detector.load_model(model_path)
 
-    pointcloud_result = grnet_detector.detect_pcd(pcd_file_path)
+    pointcloud_result = grnet_detector.detect_pcd_file(pcd_file_path)
 
     output_folder = "/home/chli/github/gr-net/output/benchmark/02691156"
     if not os.path.exists(output_folder):

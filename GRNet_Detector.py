@@ -16,6 +16,10 @@ from models.grnet import GRNet
 
 
 class GRNet_Detector:
+    '''
+    Init GRNet config and set torch env param
+    Need to load model after create this class
+    '''
     def __init__(self) -> None:
         os.environ["CUDA_VISIBLE_DEVICES"] = "0"
         torch.backends.cudnn.benchmark = True
@@ -30,6 +34,12 @@ class GRNet_Detector:
         if torch.cuda.is_available():
             self.grnet = torch.nn.DataParallel(self.grnet).cuda()
 
+    '''
+    Input:
+        model_path : .pth model path
+    Return:
+        load_success : whether load model success
+    '''
     def load_model(self, model_path):
         if not os.path.exists(model_path):
             print("GRNetDetector::load_model : model doesn't exists!")
@@ -42,7 +52,14 @@ class GRNet_Detector:
         self.grnet.eval()
         return True
 
-    # For KITTI Dataset -> "/home/chli/github/GRNet/frame_0_car_0.txt"
+    '''
+    For KITTI Dataset -> "/home/chli/github/GRNet/frame_0_car_0.txt"
+
+    Input:
+        bbox_file : .txt bbox file path
+    Return:
+        bbox : np.array((8, 3), dtype=np.float32)
+    '''
     def get_bbox(self, bbox_file):
         bbox_file_info = []
         with open(bbox_file, "r") as f:
@@ -88,15 +105,19 @@ class GRNet_Detector:
 
         return bbox
 
-
-    def detect_pcd(self, pcd_file_path):
+    '''
+    Input:
+        pointcloud : [<=2048, 3]
+    Return:
+        pointcloud_result : np.array((16384, 3), dtype=np.float32)
+    '''
+    def detect(self, pointcloud):
         k = ['partial_cloud', 'bounding_box']
         v = [[], []]
 
-        pcl = o3d.io.read_point_cloud(pcd_file_path)
-        [x_min, y_min, z_min] = pcl.points[0]
-        [x_max, y_max, z_max] = pcl.points[0]
-        for point in pcl.points:
+        [x_min, y_min, z_min] = pointcloud[0]
+        [x_max, y_max, z_max] = pointcloud[0]
+        for point in pointcloud:
             if point[0] < x_min:
                 x_min = point[0]
             if point[1] < y_min:
@@ -115,7 +136,7 @@ class GRNet_Detector:
         y_middle = (y_min + y_max) / 2.0
         z_middle = (z_min + z_max) / 2.0
 
-        pcl_np = np.asarray(pcl.points) - np.asarray([x_middle, y_middle, z_middle])
+        pcl_np = np.asarray(pointcloud) - np.asarray([x_middle, y_middle, z_middle])
 
         if pcl_np.shape[0] < self.n_points:
             zeros = np.zeros((self.n_points - pcl_np.shape[0], 3))
@@ -136,9 +157,20 @@ class GRNet_Detector:
             sparse_ptcloud, dense_ptcloud = self.grnet(data)
 
             pointcloud_result = dense_ptcloud.squeeze().cpu().numpy()
+            print("return size : ", pointcloud_result.shape)
             return pointcloud_result
 
+    '''
+    Input:
+        pcd_file_path : .pcd file path
+    Return:
+        pointcloud_result : np.array((16384, 3), dtype=np.float32)
+    '''
+    def detect_pcd_file(self, pcd_file_path):
+        pcl = o3d.io.read_point_cloud(pcd_file_path)
 
+        return self.detect(pcl.points)
+    
 if __name__ == '__main__':
     model_path = "/home/chli/github/GRNet/GRNet-ShapeNet.pth"
     pcd_file_path = "/home/chli/github/GRNet/e431f79ac9f0266bca677733d59db4df.pcd"
@@ -147,7 +179,7 @@ if __name__ == '__main__':
 
     grnet_detector.load_model(model_path)
 
-    pointcloud_result = grnet_detector.detect_pcd(pcd_file_path)
+    pointcloud_result = grnet_detector.detect_pcd_file(pcd_file_path)
 
     output_folder = "/home/chli/github/gr-net/output/benchmark/02691156"
     if not os.path.exists(output_folder):
