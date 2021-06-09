@@ -143,8 +143,7 @@ class ShapeNetDataLoader(object):
                     'model_id':
                     s,
                     'partial_cloud_path': [
-                        cfg.DATASETS.SHAPENET.PARTIAL_POINTS_PATH % (subset, dc['taxonomy_id'], s, i)
-                        for i in range(n_renderings)
+                        cfg.DATASETS.SHAPENET.PARTIAL_POINTS_PATH % (subset, dc['taxonomy_id'], s)
                     ],
                     'gtcloud_path':
                     cfg.DATASETS.SHAPENET.COMPLETE_POINTS_PATH % (subset, dc['taxonomy_id'], s),

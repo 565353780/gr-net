@@ -22,7 +22,7 @@ __C.DATASETS.SHAPENET                            = edict()
 __C.DATASETS.SHAPENET.CATEGORY_FILE_PATH         = './datasets/ShapeNet.json'
 __C.DATASETS.SHAPENET.N_RENDERINGS               = 8
 __C.DATASETS.SHAPENET.N_POINTS                   = 16384
-__C.DATASETS.SHAPENET.PARTIAL_POINTS_PATH        = '/home/chli/github/GRNet/shapenet-20210607T072352Z-001/shapenet/%s/partial/%s/%s/%02d.pcd'
+__C.DATASETS.SHAPENET.PARTIAL_POINTS_PATH        = '/home/chli/github/GRNet/shapenet-20210607T072352Z-001/shapenet/%s/partial/%s/%s.pcd'
 __C.DATASETS.SHAPENET.COMPLETE_POINTS_PATH       = '/home/chli/github/GRNet/shapenet-20210607T072352Z-001/shapenet/%s/complete/%s/%s.pcd'
 __C.DATASETS.KITTI                               = edict()
 __C.DATASETS.KITTI.CATEGORY_FILE_PATH            = './datasets/KITTI.json'
@@ -34,8 +34,8 @@ __C.DATASETS.KITTI.BOUNDING_BOX_FILE_PATH        = '/home/chli/github/GRNet/kitt
 #
 __C.DATASET                                      = edict()
 # Dataset Options: Completion3D, ShapeNet, ShapeNetCars, KITTI
-__C.DATASET.TRAIN_DATASET                        = 'KITTI'
-__C.DATASET.TEST_DATASET                         = 'KITTI'
+__C.DATASET.TRAIN_DATASET                        = 'ShapeNet'
+__C.DATASET.TEST_DATASET                         = 'ShapeNet'
 
 #
 # Constants

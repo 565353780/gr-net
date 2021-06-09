@@ -1,30 +1,27 @@
 #! /usr/bin/python3
 # -*- coding: utf-8 -*-
 
-import cv2
-import matplotlib
+from GRNet_Detector import GRNet_Detector
+
 import os
-# Fix no $DISPLAY environment variable
-matplotlib.use('Agg')
-# Fix deadlock in DataLoader
-cv2.setNumThreads(0)
-
-from pprint import pprint
-
-from config import cfg
-from core.inference import inference_net
-
+import utils.io
 
 if __name__ == '__main__':
-    cfg.CONST.WEIGHTS = "/home/chli/github/GRNet/GRNet-KITTI.pth"
-    if not os.path.exists(cfg.CONST.WEIGHTS):
-        print("Weights file doesn't exists!")
-        exit()
+    model_path = "/home/chli/github/GRNet/GRNet-ShapeNet.pth"
+    pcd_file_path = "/home/chli/github/GRNet/e431f79ac9f0266bca677733d59db4df.pcd"
 
-    print('Use config:')
-    pprint(cfg)
+    grnet_detector = GRNet_Detector()
 
-    os.environ["CUDA_VISIBLE_DEVICES"] = cfg.CONST.DEVICE
+    grnet_detector.load_model(model_path)
 
-    inference_net(cfg)
+    pointcloud_result = grnet_detector.detect_pcd(pcd_file_path)
+
+    output_folder = "/home/chli/github/gr-net/output/benchmark/02691156"
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
+
+    output_file_path = output_folder + '/test_out.h5'
+    utils.io.IO.put(output_file_path, pointcloud_result)
+
+    print('Test Output File = %s' % (output_file_path))
 
