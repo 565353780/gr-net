@@ -8,14 +8,14 @@
 import logging
 import torch
 
-import utils.data_loaders
-import utils.helpers
+import GRNetDetector.utils.data_loaders
+import GRNetDetector.utils.helpers
 
-from extensions.chamfer_dist import ChamferDistance
-from extensions.gridding_loss import GriddingLoss
-from models.grnet import GRNet
-from utils.average_meter import AverageMeter
-from utils.metrics import Metrics
+from GRNetDetector.extensions.chamfer_dist import ChamferDistance
+from GRNetDetector.extensions.gridding_loss import GriddingLoss
+from GRNetDetector.models.grnet import GRNet
+from GRNetDetector.utils.average_meter import AverageMeter
+from GRNetDetector.utils.metrics import Metrics
 
 
 def test_net(cfg, epoch_idx=-1, test_data_loader=None, test_writer=None, grnet=None):

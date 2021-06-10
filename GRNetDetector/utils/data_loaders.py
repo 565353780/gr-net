@@ -11,12 +11,12 @@ import numpy as np
 import random
 import torch.utils.data.dataset
 
-import utils.data_transforms
+import GRNetDetector.utils.data_transforms
 
 from enum import Enum, unique
 from tqdm import tqdm
 
-from utils.io import IO
+from GRNetDetector.utils.io import IO
 
 
 @unique

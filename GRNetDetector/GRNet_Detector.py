@@ -7,10 +7,10 @@ import numpy as np
 import open3d as o3d
 import torch
 
-from config import cfg
-import utils.helpers
-import utils.io
-from models.grnet import GRNet
+from GRNetDetector.config import cfg
+from GRNetDetector.utils.helpers import var_or_cuda
+import GRNetDetector.utils.io
+from GRNetDetector.models.grnet import GRNet
 
 
 class GRNet_Detector:
@@ -148,8 +148,8 @@ class GRNet_Detector:
 
         data = {}
 
-        data[k[0]] = utils.helpers.var_or_cuda(v[0])
-        #data[k[1]] = utils.helpers.var_or_cuda(v[1])
+        data[k[0]] = var_or_cuda(v[0])
+        #data[k[1]] = var_or_cuda(v[1])
 
         with torch.no_grad():
             sparse_ptcloud, dense_ptcloud = self.grnet(data)

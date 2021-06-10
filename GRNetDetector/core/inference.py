@@ -9,11 +9,11 @@ import logging
 import os
 import torch
 
-import utils.data_loaders
-import utils.helpers
-import utils.io
+import GRNetDetector.utils.data_loaders
+import GRNetDetector.utils.helpers
+import GRNetDetector.utils.io
 
-from models.grnet import GRNet
+from GRNetDetector.models.grnet import GRNet
 
 
 def inference_net(cfg):

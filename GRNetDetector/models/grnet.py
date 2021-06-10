@@ -7,8 +7,8 @@
 
 import torch
 
-from extensions.gridding import Gridding, GriddingReverse
-from extensions.cubic_feature_sampling import CubicFeatureSampling
+from GRNetDetector.extensions.gridding import Gridding, GriddingReverse
+from GRNetDetector.extensions.cubic_feature_sampling import CubicFeatureSampling
 
 
 class RandomPointSampling(torch.nn.Module):

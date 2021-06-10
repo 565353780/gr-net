@@ -16,7 +16,7 @@ import unittest
 from torch.autograd import gradcheck
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir, os.path.pardir)))
-from extensions.gridding import GriddingFunction, GriddingReverseFunction
+from GRNetDetector.extensions.gridding import GriddingFunction, GriddingReverseFunction
 
 
 class GriddingTestCase(unittest.TestCase):

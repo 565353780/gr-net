@@ -11,8 +11,8 @@ cv2.setNumThreads(0)
 
 from pprint import pprint
 
-from config import cfg
-from core.test import test_net
+from GRNetDetector.config import cfg
+from GRNetDetector.core.test import test_net
 
 
 if __name__ == '__main__':

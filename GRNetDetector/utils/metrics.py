@@ -8,7 +8,7 @@
 import logging
 import open3d
 
-from extensions.chamfer_dist import ChamferDistance
+from GRNetDetector.extensions.chamfer_dist import ChamferDistance
 
 
 class Metrics(object):

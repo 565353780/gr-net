@@ -1,10 +1,10 @@
 #! /usr/bin/python3
 # -*- coding: utf-8 -*-
 
-from GRNet_Detector import GRNet_Detector
+from GRNetDetector.GRNet_Detector import GRNet_Detector
 
 import os
-import utils.io
+from GRNetDetector.utils.io import IO
 
 if __name__ == '__main__':
     model_path = "/home/chli/github/GRNet/GRNet-ShapeNet.pth"
@@ -21,7 +21,7 @@ if __name__ == '__main__':
         os.makedirs(output_folder)
 
     output_file_path = output_folder + '/test_out.h5'
-    utils.io.IO.put(output_file_path, pointcloud_result)
+    IO.put(output_file_path, pointcloud_result)
 
     print('Test Output File = %s' % (output_file_path))
 
