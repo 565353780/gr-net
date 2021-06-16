@@ -7,8 +7,8 @@ import os
 from GRNetDetector.utils.io import IO
 
 if __name__ == '__main__':
-    model_path = "/home/chli/github/GRNet/GRNet-ShapeNet.pth"
-    pcd_file_path = "/home/chli/github/GRNet/e431f79ac9f0266bca677733d59db4df.pcd"
+    model_path = "/home/chli/GRNet/GRNet-ShapeNet.pth"
+    pcd_file_path = "/home/chli/GRNet/shapenet-20210607T072352Z-001/shapenet/test/partial/02691156/e431f79ac9f0266bca677733d59db4df.pcd"
 
     grnet_detector = GRNet_Detector()
 
