@@ -99,13 +99,13 @@ class GRNet_Detector:
             bbox[i][1] -= y_middle
             bbox[i][2] -= z_middle
 
-        bbox = np.asarray([bbox]).astype(np.float32)
+        bbox = np.asarray([bbox], dtype=np.float32)
 
         return bbox
 
     '''
     Input:
-        pointcloud : [<=2048, 3]
+        pointcloud : np.array((<=2048, 3), dtype=np.float32)
     Return:
         pointcloud_result : np.array((16384, 3), dtype=np.float32)
     '''
@@ -134,13 +134,15 @@ class GRNet_Detector:
         y_middle = (y_min + y_max) / 2.0
         z_middle = (z_min + z_max) / 2.0
 
-        pcl_np = np.asarray(pointcloud) - np.asarray([x_middle, y_middle, z_middle])
+        transform = np.asarray([x_middle, y_middle, z_middle])
+
+        pcl_np = pointcloud - transform
 
         if pcl_np.shape[0] < self.n_points:
             zeros = np.zeros((self.n_points - pcl_np.shape[0], 3))
             pcl_np = np.concatenate([pcl_np, zeros])
 
-        pcl_np = np.asarray([pcl_np]).astype(np.float32)
+        pcl_np = np.asarray([pcl_np], dtype=np.float32)
         v[0] = torch.from_numpy(pcl_np)
 
         #bbox = self.get_bbox("/home/chli/github/GRNet/frame_0_car_0.txt")
@@ -154,8 +156,7 @@ class GRNet_Detector:
         with torch.no_grad():
             sparse_ptcloud, dense_ptcloud = self.grnet(data)
 
-            pointcloud_result = dense_ptcloud.squeeze().cpu().numpy()
-            print("return size : ", pointcloud_result.shape)
+            pointcloud_result = dense_ptcloud.squeeze().cpu().numpy() + transform
             return pointcloud_result
 
     '''
@@ -167,7 +168,9 @@ class GRNet_Detector:
     def detect_pcd_file(self, pcd_file_path):
         pcl = o3d.io.read_point_cloud(pcd_file_path)
 
-        return self.detect(pcl.points)
+        nparray = np.asarray(pcl.points, dtype=np.float32)
+
+        return self.detect(nparray)
     
 if __name__ == '__main__':
     model_path = "/home/chli/github/GRNet/GRNet-ShapeNet.pth"
